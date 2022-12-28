@@ -8,14 +8,16 @@ function App() {
     date: '',
   });
 
+  const [transactions, setTransactions] = useState([]);
+
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   const fetchTransactions = async () => {
     const res = await fetch(`http://localhost:4000/transaction`);
-    const data = await res.json();
-    console.log(data);
+    const {data} = await res.json();
+    setTransactions(data);
   };
 
   const handleInput = (e) => {
