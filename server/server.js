@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 app.get('/transaction', async (req, res) => {
     try {
-        const transaction = await Transaction.find({});
+        const transaction = await Transaction.find({}).sort({createdAt: -1});
         res.json({message: 'success', data: transaction});
     } catch (error) {
         console.error(error.message);
