@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import ButtonAppBar from './components/AppBar';
 
 function App() {
   const initialFormState = {
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <div>
+      <ButtonAppBar />
       <form onSubmit={handleSubmit}>
         <input type='number'
         name='amount'
