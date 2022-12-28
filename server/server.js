@@ -27,6 +27,16 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+app.get('/transaction', async (req, res) => {
+    try {
+        const transaction = await Transaction.find({});
+        res.json({message: 'success', data: transaction});
+    } catch (error) {
+        console.error(error.message);
+        res.json({message: 'failed'});
+    }
+});
+
 app.post('/transaction', async (req, res) => {
     const {amount, description, date} = req.body;
     try {
