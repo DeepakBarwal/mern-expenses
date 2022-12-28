@@ -2,9 +2,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
+import corsOptions from './config/corsOptions.js';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
+
+app.use(cors(corsOptions));
 
 const connectDb = async () => {
     try {
@@ -14,7 +18,7 @@ const connectDb = async () => {
         console.log('DB connection unsuccessful');
         console.error(`Error: ${error.message}`);
     }
-}
+};
 connectDb();
 
 app.get('/', (req, res) => {
