@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 app.use(cors(corsOptions));
+app.use(express.json());
 
 const connectDb = async () => {
     try {
@@ -23,6 +24,11 @@ connectDb();
 
 app.get('/', (req, res) => {
     res.send('Hello World');
+});
+
+app.post('/transaction', (req, res) => {
+    const formData = req.body;
+    res.json({formData});
 });
 
 app.listen(PORT, () => {
