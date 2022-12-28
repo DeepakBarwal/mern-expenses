@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
+import Transaction from './models/Transaction.js';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -26,9 +27,18 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.post('/transaction', (req, res) => {
+app.post('/transaction', async (req, res) => {
     const {amount, description, date} = req.body;
-    res.json({status: 'ok', amount, description, date});
+    try {
+        const transaction = new Transaction({
+            amount, description, date
+        });
+        const savedTransaction = await transaction.save();
+        res.status(201).json({message: 'success', transaction: savedTransaction });
+    } catch (error) {
+        console.error(error.message);
+        res.status(201).json({message: 'failed'});
+    }
 });
 
 app.listen(PORT, () => {

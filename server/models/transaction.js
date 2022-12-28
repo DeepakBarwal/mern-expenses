@@ -12,12 +12,11 @@ const transactionSchema = new Schema({
     },
     date: {
         type: Date,
-        required: true,
         default: new Date(),
     }
 },
     {
-        timestamps,
+        timestamps: true,
     }
 );
 
