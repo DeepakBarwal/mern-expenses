@@ -27,8 +27,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/transaction', (req, res) => {
-    const formData = req.body;
-    res.json({formData});
+    const {amount, description, date} = req.body;
+    res.json({status: 'ok', amount, description, date});
 });
 
 app.listen(PORT, () => {
