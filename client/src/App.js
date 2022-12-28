@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 function App() {
 
@@ -7,6 +7,16 @@ function App() {
     description: '',
     date: '',
   });
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  const fetchTransactions = async () => {
+    const res = await fetch(`http://localhost:4000/transaction`);
+    const data = await res.json();
+    console.log(data);
+  };
 
   const handleInput = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
