@@ -50,6 +50,27 @@ function App() {
         />
         <button type='submit'>Submit</button>
       </form>
+
+      <br />
+
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>Amount</th>
+              <th>Description</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Bla bla bla</td>
+              <td>{new Date().toLocaleString()}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }
