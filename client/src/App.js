@@ -1,12 +1,13 @@
 import {useEffect, useState} from 'react';
 
 function App() {
-
-  const [form, setForm] = useState({
+  const initialFormState = {
     amount: 0,
     description: '',
     date: '',
-  });
+  };
+
+  const [form, setForm] = useState(initialFormState);
 
   const [transactions, setTransactions] = useState([]);
 
@@ -34,7 +35,10 @@ function App() {
         'content-type': 'application/json',
       }
       });
-      const data = await res.json();
+      if (res.ok) {
+        fetchTransactions();
+      }
+      setForm(initialFormState);
     } catch (error) {
       console.error(error.message);
     }
@@ -75,11 +79,15 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Bla bla bla</td>
-              <td>{new Date().toLocaleString()}</td>
-            </tr>
+            {transactions.length && transactions.map(transaction => {
+              return (
+                <tr key={transaction._id}>
+                  <td>{transaction.amount}</td>
+                  <td>{transaction.description}</td>
+                  <td>{transaction.date}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </section>
