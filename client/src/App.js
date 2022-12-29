@@ -3,13 +3,6 @@ import ButtonAppBar from './components/AppBar';
 import TransactionForm from './components/TransactionForm';
 
 function App() {
-  const initialFormState = {
-    amount: 0,
-    description: '',
-    date: '',
-  };
-
-  const [form, setForm] = useState(initialFormState);
 
   const [transactions, setTransactions] = useState([]);
 
@@ -23,55 +16,11 @@ function App() {
     setTransactions(data);
   };
 
-  const handleInput = (e) => {
-    setForm({...form, [e.target.name]: e.target.value});
-  };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`http://localhost:4000/transaction`, {
-      method: 'POST',
-      body: JSON.stringify(form),
-      headers: {
-        'content-type': 'application/json',
-      }
-      });
-      if (res.ok) {
-        fetchTransactions();
-      }
-      setForm(initialFormState);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
   return (
     <div>
       <ButtonAppBar />
 
-      <TransactionForm />
-
-      <form onSubmit={handleSubmit}>
-        <input type='number'
-        name='amount'
-        placeholder='Enter transaction amount'
-        onChange={handleInput}
-        value={form.amount}
-        />
-        <input type='text'
-        name='description'
-        placeholder='Enter transaction details'
-        onChange={handleInput}
-        value={form.description}
-        />
-        <input type='date'
-        name='date'
-        onChange={handleInput}
-        value={form.date}
-        />
-        <button type='submit'>Submit</button>
-      </form>
+      <TransactionForm fetchTransactions={fetchTransactions} />
 
       <br />
 
