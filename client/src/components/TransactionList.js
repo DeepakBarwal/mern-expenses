@@ -13,8 +13,18 @@ import IconButton from '@mui/material/IconButton';
 
 export default function TransactionList({transactions}) {
 
-  const remove = (id) => {
-    console.log(id);
+  const remove = async (id) => {
+    if (!window.confirm('Are you sure?')) return;
+    try {
+      const res = await fetch(`http://localhost:4000/transaction/${id}`, {
+      method: 'DELETE',
+      });
+      if (res.ok) {
+        window.alert('Deleted Successfully');
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
