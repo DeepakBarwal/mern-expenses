@@ -7,8 +7,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
+import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
+import IconButton from '@mui/material/IconButton';
 
 export default function TransactionList({transactions}) {
+
+  const remove = (id) => {
+    console.log(id);
+  };
+
   return (
     <>
     <Typography variant='h6' sx={{marginTop: 10}}>
@@ -27,7 +35,7 @@ export default function TransactionList({transactions}) {
           <TableBody>
             {transactions.map((row) => (
               <TableRow
-                key={row.name}
+                key={row._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row" align="center">
@@ -36,8 +44,12 @@ export default function TransactionList({transactions}) {
                 <TableCell align="center">{row.description}</TableCell>
                 <TableCell align="center">{row.date}</TableCell>
                 <TableCell align="center">
-                  <p>Edit</p>
-                  <p>Delete</p>
+                  <IconButton color="primary" component="label">
+                    <EditSharpIcon />
+                  </IconButton>
+                  <IconButton color="warning" component="label" onClick={() => remove(row._id)}>
+                    <DeleteSharpIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
