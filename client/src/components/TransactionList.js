@@ -11,7 +11,7 @@ import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import IconButton from '@mui/material/IconButton';
 
-export default function TransactionList({transactions}) {
+export default function TransactionList({transactions, fetchTransactions}) {
 
   const remove = async (id) => {
     if (!window.confirm('Are you sure?')) return;
@@ -21,6 +21,7 @@ export default function TransactionList({transactions}) {
       });
       if (res.ok) {
         window.alert('Deleted Successfully');
+        fetchTransactions();
       }
     } catch (error) {
       console.error(error.message);
