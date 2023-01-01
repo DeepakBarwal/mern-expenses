@@ -29,8 +29,24 @@ router.post('/', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
     const {id} = req.params;
-    const transaction = await Transaction.findOneAndDelete({_id: id});
-    res.json({message: 'success', transaction});
+    try {
+        const transaction = await Transaction.findOneAndDelete({_id: id});
+        res.json({message: 'success', transaction});
+    } catch (error) {
+        console.error(error.message);
+        res.status(201).json({message: 'failed'});
+    }
+});
+
+router.patch('/:id', async (req, res) => {
+    const {id} = req.params;
+    try {
+        const transaction = await Transaction.findOneAndUpdate({_id: id}, {$set: req.body});
+        res.json({message: 'success', transaction});
+    } catch (error) {
+        console.error(error.message);
+        res.status(201).json({message: 'failed'});
+    }
 });
 
 export default router;
