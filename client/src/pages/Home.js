@@ -1,40 +1,36 @@
-import { Container } from '@mui/material';
 import {useEffect, useState} from 'react';
-import ButtonAppBar from '../components/AppBar';
+import { Container } from '@mui/material';
 import TransactionForm from '../components/TransactionForm';
 import TransactionList from '../components/TransactionList';
 
-function App() {
+const Home = () => {
+    const [transactions, setTransactions] = useState([]);
+    const [editTransaction, setEditTransaction] = useState(null);
 
-  const [transactions, setTransactions] = useState([]);
-  const [editTransaction, setEditTransaction] = useState(null);
+    useEffect(() => {
+        fetchTransactions();
+    }, []);
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
+    const fetchTransactions = async () => {
+        const res = await fetch(`http://localhost:4000/transaction`);
+        const {data} = await res.json();
+        setTransactions(data);
+    };
 
-  const fetchTransactions = async () => {
-    const res = await fetch(`http://localhost:4000/transaction`);
-    const {data} = await res.json();
-    setTransactions(data);
-  };
+    return (
+        <>
+            <Container>
+                <TransactionForm fetchTransactions={fetchTransactions}
+                editTransaction={editTransaction}
+                />
 
-  return (
-    <div>
-      <ButtonAppBar />
-      
-      <Container>
-        <TransactionForm fetchTransactions={fetchTransactions}
-          editTransaction={editTransaction}
-        />
+                <TransactionList transactions={transactions} 
+                fetchTransactions={fetchTransactions} 
+                setEditTransaction={setEditTransaction}
+                />
+            </Container>
+        </>
+    );
+};
 
-        <TransactionList transactions={transactions} 
-          fetchTransactions={fetchTransactions} 
-          setEditTransaction={setEditTransaction}
-        />
-      </Container>
-    </div>
-  );
-}
-
-export default App;
+export default Home;
