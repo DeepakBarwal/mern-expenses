@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -14,9 +14,15 @@ const initialFormState = {
   date: new Date(),
 };
 
-export default function TransactionForm({fetchTransactions}) {
+export default function TransactionForm({fetchTransactions, editTransaction}) {
 
   const [form, setForm] = useState(initialFormState);
+
+  useEffect(() => {
+    if (editTransaction !== null) {
+      setForm(editTransaction);
+    }
+  }, [editTransaction]);
 
   const handleChange = (e) => {
     setForm({...form, [e.target.name]: e.target.value});
@@ -29,13 +35,7 @@ export default function TransactionForm({fetchTransactions}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:4000/transaction`, {
-      method: 'POST',
-      body: JSON.stringify(form),
-      headers: {
-        'content-type': 'application/json',
-      }
-      });
+      const res = editTransaction ? await update() : await submit();
       if (res.ok) {
         fetchTransactions();
       }
@@ -43,6 +43,28 @@ export default function TransactionForm({fetchTransactions}) {
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const submit = async () => {
+    const res = await fetch(`http://localhost:4000/transaction`, {
+      method: 'POST',
+      body: JSON.stringify(form),
+      headers: {
+        'content-type': 'application/json',
+      }
+    });
+    return res;
+  };
+
+  const update = async () => {
+    const res = await fetch(`http://localhost:4000/transaction/${editTransaction._id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(form),
+      headers: {
+        'content-type': 'application/json',
+      }
+    });
+    return res;
   };
 
   return (
@@ -61,7 +83,16 @@ export default function TransactionForm({fetchTransactions}) {
                     renderInput={(params) => <TextField size='small' sx={{marginRight: 5}} {...params} />}
                 />
             </LocalizationProvider>
-            <Button type='submit' variant="contained">Submit</Button>
+            {
+              editTransaction !== null && (
+                <Button type='submit' variant="secondary">Update</Button>
+              )
+            }
+            {
+              editTransaction === null && (
+                <Button type='submit' variant="contained">Submit</Button>
+              )
+            }
         </form>
       </CardContent>
     </Card>

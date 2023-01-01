@@ -12,7 +12,7 @@ import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import IconButton from '@mui/material/IconButton';
 import dayjs from 'dayjs';
 
-export default function TransactionList({transactions, fetchTransactions}) {
+export default function TransactionList({transactions, fetchTransactions, setEditTransaction}) {
 
   const remove = async (id) => {
     if (!window.confirm('Are you sure?')) return;
@@ -60,7 +60,9 @@ export default function TransactionList({transactions, fetchTransactions}) {
                 <TableCell align="center">{row.description}</TableCell>
                 <TableCell align="center">{formatDate(row.date)}</TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" component="label">
+                  <IconButton color="primary" component="label"
+                    onClick={() => setEditTransaction(row)}
+                  >
                     <EditSharpIcon />
                   </IconButton>
                   <IconButton color="warning" component="label" onClick={() => remove(row._id)}>
