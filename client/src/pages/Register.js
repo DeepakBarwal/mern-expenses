@@ -12,15 +12,30 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 export default function Register() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const form = {
         firstName: data.get('firstName'),
         lastName: data.get('lastName'),
         email: data.get('email'),
         password: data.get('password'),
-    });
+    };
+    try {
+      const res = await fetch(`http://localhost:4000/auth/register`, {
+        method: 'POST',
+        body: JSON.stringify(form),
+        headers: {
+          'content-type': 'application/json',
+        },
+      });
+      if (res.ok) {
+        const response = await res.json();
+        console.log(response);
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
