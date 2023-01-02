@@ -5,6 +5,7 @@ import connectDb from './database/mongodb.js';
 import cors from 'cors';
 import corsOptions from './config/corsOptions.js';
 import transactionRoutes from './routes/transaction.js';
+import authRoutes from './routes/auth.js';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/transaction', transactionRoutes);
+app.use('/auth', authRoutes);
 
 await connectDb();
 
