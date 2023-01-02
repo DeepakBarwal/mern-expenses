@@ -4,19 +4,19 @@ const {Schema} = mongoose;
 const userSchema = new Schema({
     firstName: {
         type: String,
-        required: true,
+        required: ['First Name field is required.'],
     },
     lastName: {
         type: String,
-        reuired: true,
+        reuired: ['Last Name field is required.'],
     },
     email: {
         type: String,
-        required: true,
+        required: ['email field is required.'],
     },
     password: {
         type: String,
-        required: true,
+        required: ['password field is required.'],
     },
 },
     {
