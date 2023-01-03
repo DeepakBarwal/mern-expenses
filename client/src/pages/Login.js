@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Cookies from 'js-cookie';
 
 export default function Login() {
   const handleSubmit = async (event) => {
@@ -29,7 +30,7 @@ export default function Login() {
       });
       if (res.ok) {
         const response = await res.json();
-        console.log(response);
+        Cookies.set('token', response.token);
       }
     } catch (error) {
       console.error(error.message);
