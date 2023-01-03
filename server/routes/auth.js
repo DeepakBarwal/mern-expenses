@@ -40,9 +40,13 @@ router.post('/login', async (req, res) => {
         if (!matched) {
             return res.status(409).json({message: 'credentials not found'});
         }
+        const payload = {
+            username: email,
+            _id: userExists._id,
+        };
         // create jwt token
-        const token = jwt.sign({}, 'some secret.');
-        return res.status(200).json({message: 'successfully logged in', user: userExists, token});
+        const token = jwt.sign(payload, 'some secret.');
+        return res.status(200).json({message: 'successfully logged in', token});
     } catch (error) {
         console.error(error.message);
     }
