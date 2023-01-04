@@ -4,6 +4,7 @@ import Home from './pages/Home.js';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CheckAuth from './utils/CheckAuth.js';
+import Guest from './utils/Guest';
 
 const router = createBrowserRouter([
     {
@@ -17,11 +18,15 @@ const router = createBrowserRouter([
         },
         {
           path: "/login",
-          element: <Login />,
+          element: <Guest>
+              <Login />
+            </Guest>,
         },
         {
           path: "/register",
-          element: <Register />,
+          element: <Guest>
+            <Register />
+          </Guest>,
         },
       ],
     },
