@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
             _id: userExists._id,
         };
         // create jwt token
-        const token = jwt.sign(payload, 'some secret.');
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
         return res.status(200).json({message: 'successfully logged in', token});
     } catch (error) {
         console.error(error.message);
