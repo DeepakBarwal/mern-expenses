@@ -3,7 +3,7 @@ import App from './App';
 import Home from './pages/Home.js';
 import Login from './pages/Login';
 import Register from './pages/Register';
-
+import CheckAuth from './utils/CheckAuth.js';
 
 const router = createBrowserRouter([
     {
@@ -11,7 +11,9 @@ const router = createBrowserRouter([
       children: [
         {
           path: "/",
-          element: <Home />,
+        element: <CheckAuth>
+            <Home />
+        </CheckAuth>
         },
         {
           path: "/login",
