@@ -17,7 +17,7 @@ export default function TransactionList({transactions, fetchTransactions, setEdi
   const remove = async (id) => {
     if (!window.confirm('Are you sure?')) return;
     try {
-      const res = await fetch(`http://localhost:4000/transaction/${id}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/${id}`, {
       method: 'DELETE',
       });
       if (res.ok) {
