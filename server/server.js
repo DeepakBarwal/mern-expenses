@@ -8,6 +8,7 @@ import transactionRoutes from './routes/transaction.js';
 import authRoutes from './routes/auth.js';
 import passport from 'passport';
 import passportConfig from './config/passport.js';
+import userRoutes from './routes/user.js';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -19,6 +20,7 @@ passportConfig(passport);
 
 app.use('/transaction', transactionRoutes);
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 
 await connectDb();
 
