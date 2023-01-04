@@ -11,9 +11,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../store/auth';
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,8 +34,9 @@ export default function Login() {
         },
       });
       if (res.ok) {
-        const response = await res.json();
-        Cookies.set('token', response.token);
+        const {token, user} = await res.json();
+        Cookies.set('token', token);
+        dispatch(getUser(user));
         navigate('/');
       }
     } catch (error) {

@@ -1,10 +1,10 @@
-import Cookies from 'js-cookie';
 import { Navigate } from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Guest = ({children}) => {
-    const token = Cookies.get('token');
+    const auth = useSelector(state => state.auth);
     return (
-        !token ? children : <Navigate to='/' replace={true} />
+        !auth.isAuthenticated ? children : <Navigate to='/' replace={true} />
     );
 };
 

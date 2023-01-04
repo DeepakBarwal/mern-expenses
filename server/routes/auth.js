@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         };
         // create jwt token
         const token = jwt.sign(payload, process.env.JWT_SECRET);
-        return res.status(200).json({message: 'successfully logged in', token});
+        return res.status(200).json({message: 'successfully logged in', token, user: userExists});
     } catch (error) {
         console.error(error.message);
     }
