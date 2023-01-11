@@ -11,11 +11,10 @@ export const index = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-    console.log(req.user);
     const {amount, description, date} = req.body;
     try {
         const transaction = new Transaction({
-            amount, description, date
+            amount, description, date, user_id: req.user._id
         });
         const savedTransaction = await transaction.save();
         res.status(201).json({message: 'success', transaction: savedTransaction });

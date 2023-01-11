@@ -10,6 +10,9 @@ const transactionSchema = new Schema({
         type: String,
         default: '',
     },
+    user_id: {
+        type: mongoose.Types.ObjectId,
+    },
     date: {
         type: Date,
         default: new Date(),
