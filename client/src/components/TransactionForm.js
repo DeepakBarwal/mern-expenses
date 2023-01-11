@@ -16,6 +16,7 @@ const initialFormState = {
 };
 
 export default function TransactionForm({fetchTransactions, editTransaction}) {
+  const token = Cookies.get('token');
 
   const [form, setForm] = useState(initialFormState);
 
@@ -47,7 +48,6 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
   };
 
   const submit = async () => {
-    const token = Cookies.get('token');
     const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
       method: 'POST',
       body: JSON.stringify(form),
@@ -65,6 +65,7 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
       body: JSON.stringify(form),
       headers: {
         'content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
       }
     });
     return res;
