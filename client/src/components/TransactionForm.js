@@ -7,6 +7,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Button from '@mui/material/Button';
+import Cookies from 'js-cookie';
 
 const initialFormState = {
   amount: 0,
@@ -46,12 +47,14 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
   };
 
   const submit = async () => {
+    const token = Cookies.get('token');
     const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: {
         'content-type': 'application/json',
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     return res;
   };

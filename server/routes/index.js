@@ -7,7 +7,7 @@ import passport from 'passport';
 const router = Router();
 
 router.use('/transaction', passport.authenticate('jwt', {session: false}), transactionRoutes);
-router.use('/auth', authRoutes);
-router.use('/user', userRoutes);
+router.use('/auth', passport.authenticate('jwt', {session: false}), authRoutes);
+router.use('/user', passport.authenticate('jwt', {session: false}), userRoutes);
 
 export default router;
