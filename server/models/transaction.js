@@ -13,6 +13,9 @@ const transactionSchema = new Schema({
     user_id: {
         type: mongoose.Types.ObjectId,
     },
+    category_id: {
+        type: mongoose.Types.ObjectId,
+    },
     date: {
         type: Date,
         default: new Date(),
