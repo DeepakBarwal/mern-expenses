@@ -8,17 +8,26 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Button from '@mui/material/Button';
 import Cookies from 'js-cookie';
+import { Autocomplete, Box } from '@mui/material';
 
 const initialFormState = {
   amount: 0,
   description: '',
   date: new Date(),
+  category: '',
 };
 
 export default function TransactionForm({fetchTransactions, editTransaction}) {
   const token = Cookies.get('token');
 
   const [form, setForm] = useState(initialFormState);
+
+  const categories = [
+    {label: 'Travel'},
+    {label: 'Shopping'},
+    {label: 'Investment'},
+    {label: 'Bills'},
+  ];
 
   useEffect(() => {
     if (editTransaction !== null) {
@@ -75,7 +84,7 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
     <Card sx={{ minWidth: 275, marginTop: 10 }}>
       <CardContent>
         <Typography variant="h6">Add New Transaction</Typography>
-        <form onSubmit={handleSubmit}>
+        <Box component='form' onSubmit={handleSubmit} sx={{display: 'flex'}}>
             <TextField sx={{marginRight: 5}} size='small' id="outlined-basic" label="Amount" variant="outlined" name='amount' value={form.amount} onChange={handleChange} />
             <TextField sx={{marginRight: 5}} size='small' id="outlined-basic" label="Description" variant="outlined" name='description' value={form.description} onChange={handleChange} />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -87,6 +96,16 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
                     renderInput={(params) => <TextField size='small' sx={{marginRight: 5}} {...params} />}
                 />
             </LocalizationProvider>
+            <Autocomplete
+              value={form.category}
+              onChange={(event, newValue) => {
+                setForm({...form, category: newValue.label});
+              }}
+              id="controllable-states-demo"
+              options={categories}
+              sx={{ width: 200, marginRight: 5 }}
+              renderInput={(params) => <TextField {...params} size='small' label="Category" />}
+            />
             {
               editTransaction !== null && (
                 <Button type='submit' variant="secondary">Update</Button>
@@ -97,7 +116,7 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
                 <Button type='submit' variant="contained">Submit</Button>
               )
             }
-        </form>
+        </Box>
       </CardContent>
     </Card>
   );
