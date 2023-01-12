@@ -18,6 +18,7 @@ const userSchema = new Schema({
         type: String,
         required: ['Password field is required.'],
     },
+    categories: [{label: String, icon: String}],
 },
     {
         timestamps: true,
