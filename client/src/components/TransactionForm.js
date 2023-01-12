@@ -76,6 +76,10 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
     return res;
   };
 
+  const getCategoryNameById = () => {
+    return categories.find(category => category._id === form.category_id) && '';
+  };
+
   return (
     <Card sx={{ minWidth: 275, marginTop: 10 }}>
       <CardContent>
@@ -93,9 +97,9 @@ export default function TransactionForm({fetchTransactions, editTransaction}) {
                 />
             </LocalizationProvider>
             <Autocomplete
-              value={form.category_id}
+              value={getCategoryNameById() || null}
               onChange={(event, newValue) => {
-                setForm({...form, category: newValue._id});
+                setForm({...form, category_id: newValue._id});
               }}
               id="controllable-states-demo"
               options={categories}
