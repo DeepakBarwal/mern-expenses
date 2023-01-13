@@ -40,13 +40,16 @@ export default function ButtonAppBar() {
               Expensor
             </Link>
           </Typography>
+          <Link to='/category' className='text-white'>
+            <Button color="inherit">Category</Button>
+          </Link>
           {
             isAuthenticated && <Button color="inherit" onClick={logout}>Logout</Button>
           }
           {
             !isAuthenticated && <>
               <Link to='/login' className='text-white'>
-              <Button color="inherit">Login</Button>
+                <Button color="inherit">Login</Button>
               </Link>
               <Link to='/register' className='text-white'>
                 <Button color="inherit">Register</Button>
