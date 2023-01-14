@@ -14,6 +14,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { Container } from '@mui/material';
 import Cookies from 'js-cookie';
 import {setUser} from '../store/auth.js';
+import CategoryForm from '../components/CategoryForm.js';
 
 export default function Category() {
   const user = useSelector(state => state.auth.user);
@@ -41,6 +42,7 @@ export default function Category() {
 
   return (
     <Container>
+      <CategoryForm editCategory={null} fetchTransactions={() => {}} />
     <Typography variant='h6' sx={{marginTop: 10}}>
       List of Categories
     </Typography>
