@@ -13,9 +13,9 @@ const initialFormState = {
   icon: '',
 };
 
-const icons = [{
-  label: 'User',
-}];
+const icons = [
+  'User'
+];
 
 export default function CategoryForm({fetchTransactions, editCategory}) {
   const {categories} = useSelector(state => state.auth.user);
@@ -52,7 +52,7 @@ export default function CategoryForm({fetchTransactions, editCategory}) {
   };
 
   const submit = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/category`, {
       method: 'POST',
       body: JSON.stringify(form),
       headers: {
@@ -64,7 +64,7 @@ export default function CategoryForm({fetchTransactions, editCategory}) {
   };
 
   const update = async () => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/${editCategory._id}`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/category/${editCategory._id}`, {
       method: 'PATCH',
       body: JSON.stringify(form),
       headers: {

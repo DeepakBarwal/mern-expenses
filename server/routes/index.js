@@ -11,7 +11,7 @@ const auth = passport.authenticate('jwt', {session: false});
 
 router.use('/transaction', auth, transactionRoutes);
 router.use('/auth', authRoutes);
-router.use('/user', passport.authenticate('jwt', {session: false}), userRoutes);
+router.use('/user', auth, userRoutes);
 router.use('/category', auth, categoryRoutes);
 
 export default router;
