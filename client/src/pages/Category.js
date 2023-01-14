@@ -42,7 +42,7 @@ export default function Category() {
 
   return (
     <Container>
-      <CategoryForm editCategory={null} fetchTransactions={() => {}} />
+      <CategoryForm editCategory={null} />
     <Typography variant='h6' sx={{marginTop: 10}}>
       List of Categories
     </Typography>

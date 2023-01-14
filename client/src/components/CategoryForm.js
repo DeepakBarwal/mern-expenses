@@ -6,7 +6,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Cookies from 'js-cookie';
 import { Autocomplete, Box } from '@mui/material';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {setUser} from '../store/auth.js';
 
 const initialFormState = {
   label: '',
@@ -17,12 +18,16 @@ const icons = [
   'User'
 ];
 
-export default function CategoryForm({fetchTransactions, editCategory}) {
+export default function CategoryForm({editCategory}) {
   const {categories} = useSelector(state => state.auth.user);
 
   const token = Cookies.get('token');
 
   const [form, setForm] = useState(initialFormState);
+
+  const user = useSelector(state => state.auth.user);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editCategory !== null) {
@@ -43,7 +48,8 @@ export default function CategoryForm({fetchTransactions, editCategory}) {
     try {
       const res = editCategory ? await update() : await submit();
       if (res.ok) {
-        fetchTransactions();
+        const _user = {...user, categories: [...user.categories, {...form}]};
+        dispatch(setUser({user: _user}));
       }
       setForm(initialFormState);
     } catch (error) {
