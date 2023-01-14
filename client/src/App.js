@@ -2,7 +2,7 @@ import ButtonAppBar from './components/AppBar';
 import { Outlet } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { getUser } from './store/auth';
+import { setUser } from './store/auth';
 import Cookies from 'js-cookie';
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
 
         if (res.ok) {
           const user = await res.json();
-          dispatch(getUser(user));
+          dispatch(setUser(user));
         }
     } catch (error) {
         console.error(error.message);

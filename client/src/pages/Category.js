@@ -10,32 +10,33 @@ import Typography from '@mui/material/Typography';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import IconButton from '@mui/material/IconButton';
-import dayjs from 'dayjs';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import { Container } from '@mui/material';
 import Cookies from 'js-cookie';
+import {setUser} from '../store/auth.js';
 
 export default function Category() {
   const user = useSelector(state => state.auth.user);
 
   const token = Cookies.get('token');
 
-  const formatDate = (date) => {
-    return dayjs(date).format('DD MMM, YYYY');
-  };
-
-  const categoryName = (id) => {
-    const category = user.categories.find((category) => category._id === id);
-    return category ? category.label : 'NA';
-  };
+  const dispatch = useDispatch();
 
   const remove = async (id) => {
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/category/${id}`, {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/category/${id}`, {
         method: 'DELETE',
         headers: {
             Authorization: `Bearer ${token}`,
         }
-    });
+      });
+      if (res.ok) {
+        const _user = {...user, categories: user.categories.filter(cat => cat._id != id)};
+        dispatch(setUser({user: _user}));
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
